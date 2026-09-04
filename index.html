@@ -62,6 +62,12 @@
     padding:5px 10px;border-radius:999px;
   }
   .test:active{background:var(--card)}
+  .tools{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex:none}
+  .test.on{color:var(--go);border-color:rgba(74,222,128,.45)}
+  .warn{
+    margin-top:10px;background:#2A2118;border:1px solid #4A3A20;color:#E4C88A;
+    border-radius:10px;padding:9px 11px;font-size:12px;line-height:1.6;display:none;
+  }
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
   .min{
     background:var(--card);border:1px solid var(--line);border-radius:12px;
@@ -162,10 +168,17 @@
       <div class="panel-title">新增倒數</div>
       <div class="panel-hint">按一下分鐘數，馬上開始</div>
     </div>
-    <button class="test" id="test">試聽提示音</button>
+    <div class="tools">
+      <button class="test" id="test">試聽提示音</button>
+      <button class="test" id="notify">開啟手機通知</button>
+    </div>
   </div>
   <div class="grid" id="pad"></div>
+  <div class="warn" id="warn"></div>
 </section>
+
+<audio id="keep" loop preload="auto" playsinline
+  src="data:audio/wav;base64,UklGRsQPAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YaAPAACAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCBgIGAgYCB"></audio>
 
 <div class="bar" id="bar">尚無倒數</div>
 <div class="list" id="list"></div>
@@ -174,7 +187,8 @@
 <p class="foot">
   時間到會持續響鈴，點一下卡片停止。<br>
   停止後 5 秒內再點一次，會繼續響鈴不會消失。<br>
-  倒數存在這支手機裡，重新整理或關掉網頁都不會不見。
+  倒數存在這支手機裡，重新整理或關掉網頁都不會不見。<br>
+  切到別的 App 時仍會響，但手機請插電、不要讓螢幕鎖上。
 </p>
 
 <script>
@@ -247,7 +261,17 @@
   });
 
   /* ---------------- 聲音 ---------------- */
-  var actx = null, loop = null;
+  /*
+    前景：用 setInterval 重複播放（可隨時停）
+    背景：瀏覽器會凍結 JS，所以改成「事先把響鈴排進音訊時鐘」，
+          音訊執行緒不受 JS 節流影響，時間到自己會響。
+    保活：播一段聽不見的循環音訊，讓分頁維持「正在播放媒體」狀態，
+          瀏覽器才不會把整個頁面凍結、AudioContext 才不會被暫停。
+  */
+  var actx = null;
+  var loop = null;                 // 前景重複響鈴
+  var booked = new Map();          // id -> 已排進音訊時鐘的節點
+  var $keep = document.getElementById("keep");
 
   function audioOn(){
     try{
@@ -255,9 +279,23 @@
         var AC = window.AudioContext || window.webkitAudioContext;
         if(AC) actx = new AC();
       }
-      if(actx && actx.state === "suspended") actx.resume();
-    }catch(e){}
+      if(!actx) return Promise.resolve(false);
+      if(actx.state === "suspended"){
+        var p = actx.resume();
+        if(p && p.then) return p.then(function(){ return true; }, function(){ return false; });
+      }
+      return Promise.resolve(true);
+    }catch(e){ return Promise.resolve(false); }
   }
+
+  // 無聲保活：只在有倒數時播，沒有倒數就停（才不會一直卡住店裡的音樂）
+  function keepOn(){
+    try{ if($keep && $keep.paused) $keep.play().catch(function(){}); }catch(e){}
+  }
+  function keepOff(){
+    try{ if($keep && !$keep.paused && !timers.length) $keep.pause(); }catch(e){}
+  }
+
   function tone(at, hz, dur){
     var o = actx.createOscillator(), g = actx.createGain();
     o.type = "square"; o.frequency.value = hz;
@@ -267,26 +305,112 @@
     g.gain.linearRampToValueAtTime(0, at + dur);
     o.connect(g); g.connect(actx.destination);
     o.start(at); o.stop(at + dur + .03);
+    return o;
+  }
+  function chimeAt(at){
+    return [ tone(at, 988, .12), tone(at + .17, 988, .12), tone(at + .34, 1319, .26) ];
   }
   function chime(){
-    if(!actx) return;
-    var t = actx.currentTime + .02;
-    tone(t, 988, .12); tone(t + .17, 988, .12); tone(t + .34, 1319, .26);
+    if(!actx || actx.state !== "running") return;
+    chimeAt(actx.currentTime + .02);
   }
+
+  /* --- 前景 --- */
   function ringOn(){
-    audioOn();
+    audioOn().then(function(ok){ if(ok) chime(); });
     if(loop) return;
-    chime();
     loop = setInterval(function(){
       chime();
       if(navigator.vibrate) navigator.vibrate([180,90,180]);
     }, 1300);
   }
   function ringOff(){ if(loop){ clearInterval(loop); loop = null; } }
+
   function syncSound(){
+    if(document.hidden) return;              // 背景交給預排程，不重複發聲
     var any = timers.some(function(t){ return t.status === "ringing"; });
     if(any) ringOn(); else ringOff();
   }
+
+  /* --- 背景：把響鈴預先排進音訊時鐘 --- */
+  function book(t){
+    if(!actx || actx.state !== "running") return;
+    unbook(t.id);
+    var lead = (t.endAt - Date.now()) / 1000;
+    if(lead > 3600) return;                  // 太遠的等下次進背景再排
+    var base = actx.currentTime + Math.max(lead, 0);
+    var nodes = [];
+    for(var i = 0; i < 40; i++){             // 約 52 秒的連續響鈴
+      var at = base + i * 1.3;
+      if(at < actx.currentTime) continue;
+      nodes = nodes.concat(chimeAt(at));
+    }
+    booked.set(t.id, nodes);
+  }
+  function unbook(id){
+    var nodes = booked.get(id);
+    if(!nodes) return;
+    nodes.forEach(function(o){ try{ o.stop(); o.disconnect(); }catch(e){} });
+    booked.delete(id);
+  }
+  function bookAll(){
+    audioOn().then(function(ok){
+      if(!ok) return;
+      timers.forEach(function(t){ if(t.status !== "pending") book(t); });
+    });
+  }
+  function unbookAll(){ Array.from(booked.keys()).forEach(unbook); }
+
+  /* --- 手機通知 --- */
+  var $notify = document.getElementById("notify");
+
+  function notifySupported(){ return "Notification" in window; }
+  function notifyReady(){ return notifySupported() && Notification.permission === "granted"; }
+
+  function notifyAsk(){
+    if(!notifySupported()) return Promise.resolve(false);
+    if(Notification.permission === "granted") return Promise.resolve(true);
+    if(Notification.permission === "denied")  return Promise.resolve(false);
+    try{
+      return Promise.resolve(Notification.requestPermission()).then(function(p){
+        return p === "granted";
+      });
+    }catch(e){ return Promise.resolve(false); }
+  }
+
+  function notifyFire(t){
+    if(!notifyReady()) return;
+    try{
+      var n = new Notification("餐點時間到", {
+        body: clock(t.endAt) + " 的單，該出餐了",
+        tag: t.id,
+        renotify: true,
+        requireInteraction: true
+      });
+      n.onclick = function(){ try{ window.focus(); }catch(e){} n.close(); };
+    }catch(e){}
+  }
+
+  function notifyPaint(){
+    if(!notifySupported()){ $notify.style.display = "none"; return; }
+    if(Notification.permission === "granted"){
+      $notify.textContent = "手機通知已開";
+      $notify.className = "test on";
+    } else if(Notification.permission === "denied"){
+      $notify.textContent = "通知被封鎖";
+      $notify.className = "test";
+    } else {
+      $notify.textContent = "開啟手機通知";
+      $notify.className = "test";
+    }
+  }
+
+  $notify.addEventListener("click", function(){
+    notifyAsk().then(function(ok){
+      notifyPaint();
+      if(ok) notifyFire({ id:"demo", endAt: Date.now() });
+    });
+  });
 
   /* ---------------- 螢幕保持亮著 ---------------- */
   var lock = null;
@@ -300,12 +424,24 @@
     }catch(e){}
   }
   document.addEventListener("visibilitychange", function(){
-    if(document.visibilityState === "visible"){ keepAwake(); if(loop) audioOn(); }
+    if(document.hidden){
+      // 要進背景了：停掉會被凍結的 JS 迴圈，改用音訊時鐘預排程
+      ringOff();
+      bookAll();
+    } else {
+      // 回到前景：撤掉預排程，由 JS 接手，並補算離開這段時間
+      unbookAll();
+      keepAwake();
+      audioOn();
+      tick();
+      syncSound();
+    }
   });
+  window.addEventListener("pagehide", function(){ ringOff(); bookAll(); });
 
   /* ---------------- 新增 / 移除 ---------------- */
   function add(mins){
-    audioOn(); keepAwake();
+    audioOn(); keepAwake(); keepOn();
     timers.push({
       id: "t" + (seq++) + "_" + Date.now(),
       endAt: Date.now() + mins*UNIT,
@@ -316,8 +452,9 @@
     layout(); save();
   }
   function remove(id){
+    unbook(id);
     timers = timers.filter(function(t){ return t.id !== id; });
-    layout(); save(); syncSound();
+    layout(); save(); syncSound(); keepOff();
   }
 
   /* ---------------- 分鐘按鈕 ---------------- */
@@ -355,6 +492,7 @@
       if(t2.status === "ringing"){
         t2.status = "pending";
         t2.pendingUntil = Date.now() + GRACE;
+        unbook(t2.id);
         syncSound(); save();
       } else if(t2.status === "pending"){
         t2.status = "ringing";
@@ -406,7 +544,10 @@
     var changed = false, expired = [];
 
     timers.forEach(function(t, i){
-      if(t.status === "running" && now >= t.endAt){ t.status = "ringing"; changed = true; }
+      if(t.status === "running" && now >= t.endAt){
+        t.status = "ringing"; changed = true;
+        notifyFire(t);
+      }
       if(t.status === "pending" && now >= t.pendingUntil){ expired.push(t.id); return; }
 
       var el = nodes.get(t.id);
@@ -427,7 +568,10 @@
 
       if(t.status === "ringing"){
         $t.textContent = "00:00";
-        $s.textContent = "時間到，點一下停止";
+        var over = now - t.endAt;
+        $s.textContent = over > 20000
+          ? "已響 " + mmss(over) + "，點一下停止"
+          : "時間到，點一下停止";
       } else if(t.status === "pending"){
         var rest = t.pendingUntil - now;
         $t.textContent = Math.ceil(rest/1000) + " 秒";
@@ -451,26 +595,39 @@
 
   /* ---------------- 啟動 ---------------- */
   document.getElementById("test").addEventListener("click", function(){
-    audioOn(); chime();
+    audioOn().then(function(ok){ if(ok) chime(); });
     if(navigator.vibrate) navigator.vibrate(120);
   });
   document.addEventListener("pointerdown", function once(){
     audioOn(); keepAwake();
+    if(timers.length) keepOn();
     document.removeEventListener("pointerdown", once);
   });
 
+  // 說明目前這台裝置的背景限制
+  (function(){
+    var $w = document.getElementById("warn");
+    var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+              (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    var standalone = window.matchMedia("(display-mode: standalone)").matches ||
+                     window.navigator.standalone === true;
+    if(ios && !standalone){
+      $w.innerHTML = "iPhone 請把這頁「加到主畫面」再開啟，背景響鈴才可靠。<br>螢幕鎖上時仍可能不會響，建議讓手機插電、螢幕保持亮著。";
+      $w.style.display = "block";
+    } else if(!notifySupported()){
+      $w.textContent = "這個瀏覽器不支援手機通知，請讓畫面保持在這一頁。";
+      $w.style.display = "block";
+    }
+  })();
+
   load();
+  notifyPaint();
   layout();
   syncSound();
+  if(timers.length) keepOn();
   setInterval(tick, 200);
   tick();
 })();
 </script>
-
-<!-- Cloudflare Web Analytics -->
- <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' 
- data-cf-beacon='{"token": "845cfff0906e43b59d0de54454ddf35f"}'>
-</script>
-<!-- End Cloudflare Web Analytics -->
 </body>
 </html>
